@@ -1,0 +1,7 @@
+lxml
+requests
+Flask
+flask_sqlalchemy
+flask_script
+flask_migrate
+psycopg2-binary
