@@ -1,11 +1,17 @@
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
+try:
+    app = Flask(__name__)
 
-app.config.from_object('config.config.DevelomentConfig')
-app.config['HOLA'] = False
+    app.config.from_object('config.DevelomentConfig')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db = SQLAlchemy(app)
+except Exception as e:
+    print("Log: Error connecting Database.")
+
+from models import currency, currency_rate
 
 
 @app.route("/")
