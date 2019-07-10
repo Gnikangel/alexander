@@ -22,3 +22,4 @@ for rate_entry in list(rates_table):
         rate = float(rate_entry.find(
             "td[@class='historicalRateTable-rateHeader']").text)
         res[currency_code] = rate
+pprint(res)

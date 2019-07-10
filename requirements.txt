@@ -1,7 +1,8 @@
 lxml
 requests
-Flask
+flask
 flask_sqlalchemy
 flask_script
 flask_migrate
 psycopg2-binary
+os
