@@ -6,7 +6,13 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLE = True
-    SQL_DB = 'hola'
+    SECRET_KEY = 'this-really-needs-to-be-changed'
+    DB_URI = (
+        "postgresql+psycopg2://{username}:{password}@{hostname}/"
+        "{databasename}".format(
+            username="postgres", password="postgres",
+            hostname="localhost", databasename="prometheus"))
+    SQLALCHEMY_DATABASE_URI = DB_URI
 
 
 class ProductionConfig(Config):
