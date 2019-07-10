@@ -6,12 +6,11 @@ app = Flask(__name__)
 
 app.config.from_object('config.config.DevelomentConfig')
 app.config['HOLA'] = False
-#db = SQLAlchemy(app)
 
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "Hola juanito como estas"
 
 
 if __name__ == '__main__':
