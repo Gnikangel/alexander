@@ -29,10 +29,17 @@ class CurrencyRate(db.Model):
             'rate': self.rate,
         }
 
-# Inserta el nuevo registro de conversion a la Base de datos
-    def insert_new_convertion_rate(isoTo, isoFrom, rate, date):
-        objToInsert = CurrencyRate(isoTo, isoFrom, date, rate)
-        db.session.add(objToInsert)
+    @staticmethod
+    def find_rate(iso_from, iso_to, date):
+        return CurrencyRate.query.filter(
+            CurrencyRate.iso_code_from == iso_from,
+            CurrencyRate.iso_code_to == iso_to,
+            CurrencyRate.date == date).first()
+
+    # Inserta el nuevo registro de conversion a la Base de datos
+    def insert_new_convertion_rate(iso_to, iso_from, rate, date):
+        new_obj = CurrencyRate(iso_to, iso_from, date, rate)
+        db.session.add(new_obj)
         db.session.commit()
-        pprint(objToInsert)
-        return objToInsert
+        pprint(new_obj)
+        return new_obj

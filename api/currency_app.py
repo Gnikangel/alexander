@@ -7,18 +7,18 @@ from models.currency_rate import CurrencyRate
 from app import db
 
 
-def fetch_app_data(fil, isoTo):
+def fetch_app_data(fil, iso_to):
     rate = 1.0
     for rate_entry in list(fil):
         currency_code = ''
-        if(isoTo == rate_entry.find('.//a').text):
+        if(iso_to == rate_entry.find('.//a').text):
             currency_code = rate_entry.find('.//a').text
             rate = float(rate_entry.find(
                 "td[@class='historicalRateTable-rateHeader']").text)
     return round(rate, 6)
 
 
-def fetch_web_currency_rate(isofrom, isoTo, date):
+def fetch_web_currency_rate(iso_from, iso_to, date):
     rateRound = 1.0
     url_format = (
         'http://www.xe.com/currencytables/?'
@@ -26,7 +26,7 @@ def fetch_web_currency_rate(isofrom, isoTo, date):
 
     try:
         fetched_data = get(url_format % {
-            'currency_code': isofrom, 'date': date})
+            'currency_code': iso_from, 'date': date})
     except Exception:
         print("Log -> ERROR al obtener las converciones")
 
@@ -35,7 +35,7 @@ def fetch_web_currency_rate(isofrom, isoTo, date):
         rates_table = list(htmlelem.find(
             ".//table[@id='historicalRateTbl']/tbody"))
         filtew = filter(lambda tr: type(tr) != etree._Comment, rates_table)
-        rateRound = fetch_app_data(filtew, isoTo)
+        rateRound = fetch_app_data(filtew, iso_to)
     else:
         pprint('Log -> Currency rate: %f' % rateRound)
 
