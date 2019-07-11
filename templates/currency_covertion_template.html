@@ -1,0 +1,28 @@
+{% extends "get_rate_template.html" %}
+ {% block header %}
+    <h1 class="text-center">Convert Money</h1>
+{% endblock %}
+{% block title %}
+    <title>Conver Money</title>
+{% endblock %}
+{% block inputs %}
+  {{ super() }}
+    <div class="form-group">
+        <input type="number" id="amount" class="form-control" placeholder="$ Amount"/>
+     </div>
+{% endblock %}
+{% block action_script%}
+<script type="text/javascript" charset="utf-8" async defer>
+    $("#getRateBtn").click(function() {
+        $.get("/convert", { isoFrom: $("#iso_from option:checked").val(), isoTo: $("#iso_to option:checked").val(), date: $("#date").val(), amount: $("#amount").val()} ).done(function(res) {
+            try{
+                res = JSON.parse(res); 
+
+                $("#result").html("<h1 class='text-center'> Your Result is</h1> <br/> <h1 class='text-center'>" + res + "</h1>");  
+            } catch(error) {
+                alert("You must set the parameters to process this request.")
+            }
+        });
+    });
+</script>
+{% endblock %}

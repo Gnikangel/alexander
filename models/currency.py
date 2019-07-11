@@ -19,6 +19,10 @@ class Currency(db.Model):
     def __repr__(self):
         return '<currency_id {}>'.format(self.currency_id)
 
+    @staticmethod
+    def find_all():
+        return Currency.query.order_by(Currency.iso_code).all()
+
     def serialize(self):
         return {
             'currency_id': self.currency_id,
