@@ -4,5 +4,7 @@ flask
 flask_sqlalchemy
 flask_script
 flask_migrate
+flask_login
 psycopg2-binary
 os
+werkzeug

@@ -11,7 +11,7 @@ class Config(object):
         "postgresql+psycopg2://{username}:{password}@{hostname}/"
         "{databasename}".format(
             username="postgres", password="postgres",
-            hostname="localhost", databasename="prometheus"))
+            hostname="localhost", databasename="alexander"))
     SQLALCHEMY_DATABASE_URI = DB_URI
 
 
