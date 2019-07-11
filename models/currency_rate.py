@@ -25,7 +25,7 @@ class CurrencyRate(db.Model):
             'currency_rate_id': self.currency_rate_id,
             'iso_code_to': self.iso_code_to,
             'iso_code_from': self.iso_code_from,
-            'date': self.date,
+            'date': self.date.isoformat(),
             'rate': self.rate,
         }
 

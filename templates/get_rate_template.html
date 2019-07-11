@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/fontawesome-free-5.9.0-web/css/all.min.css') }}">
+    <script src="{{ url_for('static', filename='lib/jquery/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/popperJS/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+    {% block title %}
+    <title>Home</title>
+    {% endblock %}
+</head>
+<style type="text/css" media="screen">
+
+</style>
+<body>
+    <div class="container">
+        {% block header %}
+            <h1 class="text-center">Search the Current Rate</h1>
+        {% endblock %}
+    </div>
+   <div class="d-flex justify-content-around">
+        <form class="form-inline">
+            {% block inputs %}
+                <div class="form-group">
+                    <select class="form-control" id="iso_from">
+                        <option value="">From Currency...</option>
+                        {% for currency in currencies%}
+                            <option value="{{currency.iso_code}}">{{currency.iso_code + " - " + currency.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="iso_to">
+                        <option value="">To Currency...</option>
+                        {% for currency in currencies%}
+                            <option value="{{currency.iso_code}}">{{currency.iso_code + " - " + currency.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                  <input type="date" id="date" class="form-control" placeholder="Date"/>
+                </div>
+            {% endblock %}
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="getRateBtn"><i class="fas fa-search"></i></button>
+            </div>
+      </form>
+   </div>
+   <div id="result"></div>
+</body>
+
+{% block action_script%}
+<script type="text/javascript" charset="utf-8" async defer>
+    $("#getRateBtn").click(function() {
+        $.get("/getRate", { isoFrom: $("#iso_from option:checked").val(), isoTo: $("#iso_to option:checked").val(), date: $("#date").val()} ).done(function(res) {
+            try{
+                res = JSON.parse(res); 
+
+                $("#result").html("<h1 class='text-center'> Your Result is</h1> <br/> <h1 class='text-center'>" + res.rate + "</h1>");  
+            } catch(error) {
+                alert("You must set the parameters to process this request.")
+            }
+        });
+    });
+</script>
+{% endblock %}
+</html>
