@@ -34,6 +34,9 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <button type="button" class="btn btn-secondary" id="exchange_currencies"><i class="fas fa-exchange-alt"></i></button>
+                </div>
+                <div class="form-group">
                     <select class="form-control" id="iso_to">
                         <option value="">To Currency...</option>
                         {% for currency in currencies%}
@@ -66,6 +69,12 @@
             }
         });
     });
+    $("#exchange_currencies").on("click", function() {
+        let iso_from = $("#iso_from option:checked").val();
+        let iso_to = $("#iso_to option:checked").val();
+        $("#iso_to").val(iso_from);
+        $("#iso_from").val(iso_to);
+     });
 </script>
 {% endblock %}
 </html>
